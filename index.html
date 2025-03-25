@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Personal Blog</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1 data-en="My Personal Blog" data-zh="我的个人博客">
+        My Personal Blog
+      </h1>
+      <nav>
+        <a href="#about" data-en="About Me" data-zh="关于我">About Me</a>
+        <a href="#projects" data-en="Projects" data-zh="作品集">Projects</a>
+        <a href="#contact" data-en="Contact Me" data-zh="联系我">Contact Me</a>
+        <button class="lang-btn" onclick="switchLanguage('en')">English</button>
+        <button class="lang-btn" onclick="switchLanguage('zh')">中文</button>
+        <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+      </nav>
+    </header>
+
+    <section id="about" class="about">
+      <img src="avatar.jpg" alt="My Photo" />
+      <h2 data-en="Hi, I'm XXX" data-zh="你好，我是XXX">Hi, I'm XXX</h2>
+      <p
+        data-en="A full-stack developer who loves code, design, and sharing ideas."
+        data-zh="一名全栈开发者，热爱编程、设计与技术，喜欢分享与探索前沿技术。"
+      >
+        A full-stack developer who loves code, design, and sharing ideas.
+      </p>
+      <div class="skills">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">React</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">UI Design</span>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title" data-en="My Projects" data-zh="我的项目">
+        My Projects
+      </h2>
+      <div class="projects">
+        <div class="project-card">
+          <a href="#">
+            <h3 data-en="Project A1" data-zh="项目 A1">Project A1</h3>
+            <p
+              data-en="A responsive flower shop website that improved customer conversion."
+              data-zh="一个响应式鲜花电商网站，用户体验友好，提升了转化率。"
+            >
+              A responsive flower shop website that improved customer
+              conversion.
+            </p>
+          </a>
+        </div>
+        <div class="project-card">
+          <a href="#">
+            <h3 data-en="Project A2" data-zh="项目 A2">Project A2</h3>
+            <p
+              data-en="Showcase site for a cookery school focusing on UX/UI and elegance."
+              data-zh="为烹饪学校打造的展示网站，注重交互性与视觉吸引力。"
+            >
+              Showcase site for a cookery school focusing on UX/UI and elegance.
+            </p>
+          </a>
+        </div>
+        <div class="project-card">
+          <a href="#">
+            <h3 data-en="Project A3" data-zh="项目 A3">Project A3</h3>
+            <p
+              data-en="An online art magazine platform that connects artists and audiences."
+              data-zh="在线艺术杂志平台，支持艺术家展示作品并构建社区互动。"
+            >
+              An online art magazine platform that connects artists and
+              audiences.
+            </p>
+          </a>
+        </div>
+      </div>
+
+      <h2 class="section-title" data-en="Tech News" data-zh="技术资讯">
+        Tech News
+      </h2>
+      <div id="news-loading">⏳ Loading news...</div>
+      <div class="projects" id="news-section"></div>
+      <div id="news-sentinel"></div>
+    </section>
+
+    <div class="modal" id="news-modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">×</span>
+        <h3 id="modal-title"></h3>
+        <p id="modal-content"></p>
+      </div>
+    </div>
+
+    <footer id="contact">
+      <span
+        data-en="Email: yourname@example.com | All rights reserved © 2025"
+        data-zh="联系邮箱：yourname@example.com ｜ 版权所有 © 2025"
+        >Email: yourname@example.com | All rights reserved © 2025</span
+      >
+    </footer>
+
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="script.js"></script>
+  </body>
+</html>

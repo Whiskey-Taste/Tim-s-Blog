@@ -1,0 +1,226 @@
+:root {
+    --bg-color: #f9f9f9;
+    --text-color: #1c1c1e;
+    --card-bg: #ffffff;
+    --hover-border: #007aff;
+  }
+  body.dark {
+    --bg-color: #1c1c1e;
+    --text-color: #f9f9f9;
+    --card-bg: #2c2c2e;
+    --hover-border: #0a84ff;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 0 1rem;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  header {
+    background: var(--card-bg);
+    padding: 1.5rem 0;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  nav {
+    margin-top: 1rem;
+  }
+
+  nav a,
+  .lang-btn,
+  .theme-btn {
+    margin: 0 0.5rem;
+    text-decoration: none;
+    color: var(--hover-border);
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  nav a:hover,
+  .lang-btn:hover,
+  .theme-btn:hover {
+    background: rgba(0, 122, 255, 0.1);
+  }
+
+  .about {
+    max-width: 800px;
+    margin: 3rem auto;
+    text-align: center;
+  }
+
+  .about img {
+    width: 150px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+
+  .about h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+
+  .about p {
+    color: var(--text-color);
+  }
+
+  .skills {
+    margin-top: 1rem;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #e5e5ea;
+    color: #1c1c1e;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    margin: 0.3rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+  }
+
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+  }
+
+  .project-card,
+  .news-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+  }
+
+  .project-card:hover,
+  .news-card:hover {
+    transform: rotateY(5deg) translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .project-card a,
+  .news-card a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card a:hover,
+  .news-card a:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card h3,
+  .news-card h3 {
+    font-size: 1.2rem;
+    color: var(--hover-border);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-card p,
+  .news-card p {
+    font-size: 0.95rem;
+    color: var(--text-color);
+  }
+
+  .news-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+
+  #news-loading {
+    text-align: center;
+    font-size: 1rem;
+    padding: 1rem;
+    color: #8e8e93;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: var(--card-bg);
+    color: var(--text-color);
+    padding: 2rem;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 12px;
+  }
+
+  .modal-close {
+    float: right;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  #back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 0.6rem 1rem;
+    background: var(--hover-border);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: none;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: #f2f2f7;
+    color: #8e8e93;
+    font-size: 0.875rem;
+  }
