@@ -107,6 +107,7 @@ function renderNewsPage() {
 }
 
 let stackPage = 0;
+
 function renderStackNews(stackItems) {
   const container = document.getElementById("stack-news-section");
   const start = stackPage * pageSize;
@@ -114,31 +115,34 @@ function renderStackNews(stackItems) {
   const itemsToRender = stackItems.slice(start, end);
 
   itemsToRender.forEach((item) => {
-    let imageUrl = item.thumbnail || "";
-    if (!imageUrl && item.enclosure && item.enclosure.link) {
-      imageUrl = item.enclosure.link;
-    }
-    if (!imageUrl && item.description) {
+    let image = item.thumbnail;
+
+    if (!image && item.description) {
       const match = item.description.match(/<img[^>]+src="([^">]+)"/);
       if (match && match[1]) {
-        imageUrl = match[1];
+        image = match[1];
       }
     }
 
-    const plainText = item.description.replace(/<[^>]+>/g, "");
-    const shortText = plainText.length > 120 ? plainText.slice(0, 120) + "..." : plainText;
-
     const card = document.createElement("div");
     card.className = "news-card";
-    card.innerHTML = `<a href="${item.link}" target="_blank">
-                        ${imageUrl ? `<img src="${imageUrl}" loading="lazy" alt="thumbnail">` : ""}
-                        <h3>${item.title}</h3>
-                        <p>${shortText}</p>
-                      </a>`;
+    card.innerHTML = `
+      <a href="${item.link}" target="_blank">
+        ${image ? `<img src="${image}" loading="lazy" alt="thumbnail">` : ""}
+        <h3>${item.title}</h3>
+        <p>${stripHTML(item.description).slice(0, 120)}...</p>
+      </a>
+    `;
     container.appendChild(card);
   });
 
   stackPage++;
+}
+
+function stripHTML(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
 }
 
 new IntersectionObserver((entries) => {
