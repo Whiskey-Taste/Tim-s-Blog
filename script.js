@@ -2,6 +2,7 @@ let currentLang = "en";
 let currentPage = 0;
 const pageSize = 3;
 let allNews = [];
+let stackNews = [];
 
 function switchLanguage(lang) {
   currentLang = lang;
@@ -9,7 +10,7 @@ function switchLanguage(lang) {
     el.textContent = el.getAttribute("data-" + lang);
   });
   currentPage = 0;
-  loadTechNews();
+  loadNews();
 }
 
 function toggleTheme() {
@@ -39,26 +40,47 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
-async function loadTechNews() {
+async function loadNews() {
   const rssUrls = {
-    en: "https://api.rss2json.com/v1/api.json?rss_url=https://www.theverge.com/rss/index.xml",
-    zh: "https://api.rss2json.com/v1/api.json?rss_url=https://www.ithome.com/rss/",
+    tech: {
+      en: "https://api.rss2json.com/v1/api.json?rss_url=https://www.theverge.com/rss/index.xml",
+      zh: "https://api.rss2json.com/v1/api.json?rss_url=https://www.ithome.com/rss/",
+    },
+    stack: {
+      en: "https://api.rss2json.com/v1/api.json?rss_url=https://thenewstack.io/feed/",
+      zh: "https://api.rss2json.com/v1/api.json?rss_url=https://www.infoq.cn/feed.xml",
+    }
   };
 
   document.getElementById("news-loading").style.display = "block";
+  document.getElementById("stack-loading").style.display = "block";
+  document.getElementById("news-loading").style.display = "none";
+  document.getElementById("stack-loading").style.display = "none";
+
   try {
-    const res = await fetch(rssUrls[currentLang]);
-    const data = await res.json();
-    allNews = data.items;
+    const techRes = await fetch(rssUrls.tech[currentLang]);
+    const techData = await techRes.json();
+    allNews = techData.items;
     currentPage = 0;
     document.getElementById("news-section").innerHTML = "";
-    document.getElementById("news-loading").style.display = "none";
     renderNewsPage();
+
+    const stackRes = await fetch(rssUrls.stack[currentLang]);
+    const stackData = await stackRes.json();
+    stackNews = stackData.items;
+    stackPage = 0;
+    document.getElementById("stack-news-section").innerHTML = "";
+    renderStackNews(stackData.items);
   } catch (err) {
     console.error("Failed to load news:", err);
-    document.getElementById("news-loading").textContent =
-      "Failed to load news.";
+    document.getElementById("news-loading").textContent = "Failed to load news.";
   }
+
+  setTimeout(() => {
+    if (document.getElementById("stack-news-section").childElementCount === 0 && stackNews.length > 0) {
+      renderStackNews(stackNews);
+    }
+  }, 300);
 }
 
 function renderNewsPage() {
@@ -71,11 +93,10 @@ function renderNewsPage() {
     const card = document.createElement("div");
     card.className = "news-card";
     card.innerHTML = `<a href="${item.link}" target="_blank">
-                      ${
-                        item.thumbnail
-                          ? `<img src="${item.thumbnail}" loading="lazy" alt="thumbnail">`
-                          : ""
-                      }
+                      ${item.thumbnail
+        ? `<img src="${item.thumbnail}" loading="lazy" alt="thumbnail">`
+        : ""
+      }
                       <h3>${item.title}</h3>
                       <p>${item.description.slice(0, 120)}...</p>
                     </a>`;
@@ -84,6 +105,49 @@ function renderNewsPage() {
 
   currentPage++;
 }
+
+let stackPage = 0;
+function renderStackNews(stackItems) {
+  const container = document.getElementById("stack-news-section");
+  const start = stackPage * pageSize;
+  const end = start + pageSize;
+  const itemsToRender = stackItems.slice(start, end);
+
+  itemsToRender.forEach((item) => {
+    let imageUrl = item.thumbnail || "";
+    if (!imageUrl && item.enclosure && item.enclosure.link) {
+      imageUrl = item.enclosure.link;
+    }
+    if (!imageUrl && item.description) {
+      const match = item.description.match(/<img[^>]+src="([^">]+)"/);
+      if (match && match[1]) {
+        imageUrl = match[1];
+      }
+    }
+
+    const plainText = item.description.replace(/<[^>]+>/g, "");
+    const shortText = plainText.length > 120 ? plainText.slice(0, 120) + "..." : plainText;
+
+    const card = document.createElement("div");
+    card.className = "news-card";
+    card.innerHTML = `<a href="${item.link}" target="_blank">
+                        ${imageUrl ? `<img src="${imageUrl}" loading="lazy" alt="thumbnail">` : ""}
+                        <h3>${item.title}</h3>
+                        <p>${shortText}</p>
+                      </a>`;
+    container.appendChild(card);
+  });
+
+  stackPage++;
+}
+
+new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && stackNews.length > 0) {
+    renderStackNews(stackNews);
+  }
+}, {
+  rootMargin: "100px"
+}).observe(document.getElementById("stack-news-sentinel"));
 
 const observer = new IntersectionObserver(
   (entries) => {
