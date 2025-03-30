@@ -7,7 +7,7 @@ let stackNews = [];
 function switchLanguage(lang) {
   currentLang = lang;
   document.querySelectorAll("[data-en]").forEach((el) => {
-    el.textContent = el.getAttribute("data-" + lang);
+    el.innerHTML = el.getAttribute("data-" + lang);
   });
   currentPage = 0;
   loadNews();
