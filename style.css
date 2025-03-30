@@ -159,6 +159,23 @@
     color: var(--text-color);
   }
 
+  .project-desc {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin-top: 0.5rem;
+  }
+  
+  .project-desc ul {
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  
+  .project-desc ul li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    list-style-type: disc;
+  }
+  
   .news-card img {
     width: 100%;
     height: auto;
